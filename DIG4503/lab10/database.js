@@ -1,7 +1,9 @@
 import MongoClient from 'mongodb';
 
-const url = "mongodb+srv://RandallCollins:Lopvx0SD8NNuYaZA@cluster0.yuzwq.mongodb.net";
 
+
+const url = "mongodb+srv://RandallCollins:Lopvx0SD8NNuYaZA@cluster0.yuzwq.mongodb.net";
+MongoClient.connect(url, function(err, connection) {
 class Database {
     constructor() {
         this.arrayExample = [
@@ -47,20 +49,19 @@ class Database {
     }
 
     readOne(person) {
-        // Setup a default response.
+        // Default response.
         let result = {person: "not found"};
 
-        //RANDALL
-        collection.findOne({
-
-
-        });
-        // Search through the internal array.
-        this.arrayExample.forEach(value => {
-            if(value == person) {
-                result = {person: person};
-            }
-        });
+        //Find
+        collection.findOne({"firstName": {$eq:""}}, {"lastName": {$eq:""}}, {"favoriteColor": {$eq:""}}
+        .then((results) => {
+            console.log(result);
+            connection.close();
+        })
+        .catch(error => {
+            console.log("Error: " + error);
+        })
+        );
 
         // Return the default or searched-for result.
         return result;
@@ -72,5 +73,6 @@ class Database {
         }
       }
 }
+});
 
 export default Database;
