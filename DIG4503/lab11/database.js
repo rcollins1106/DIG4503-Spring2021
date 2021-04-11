@@ -10,9 +10,9 @@ class Database {
         //Wait for the connect() method to finish.
         this.connection = await MongoClient.connect(url, {useUnifiedTopology: true});
         //Select a database.
-        this.database = this.connection.db("lab11");
+        this.database = this.connection.db("lab10");
         //Select a collection.
-        this.collection = this.database.collection("books");
+        this.collection = this.database.collection("people");
     }
     //Complete
     close(){
@@ -27,10 +27,9 @@ class Database {
         
         //insert
         collection.insertOne({
-            "ISBN": "", 
-            "title": "",
-            "author": "",
-            "description": "description"
+            "firstName": "Randall", 
+            "lastName": "Collins",
+            "favoriteColor": "Green"
 
         });
 
@@ -59,6 +58,9 @@ class Database {
 });
 
 export default Database;
+
+
+
 
 
 //delete
