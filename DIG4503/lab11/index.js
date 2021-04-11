@@ -18,10 +18,10 @@ App.put("/books/:ISBN", (req, res) => {
     const author = req.body.author;
     const description = req.body.description;
 
-    const result = db.createOne(id);
+    const result = db.createOne();
 
     res.json({
-        id: id,
+        title: title,
         author: author,
         description: description
     });
@@ -29,9 +29,16 @@ App.put("/books/:ISBN", (req, res) => {
 });
 // GET (app.get() ) -> Database.readOne() -> collectionfindOne()
 App.get("/books/:ISBN", (req, res) => {
-    const id = req.params.id;
+    const ISBN = req.params.ISBN;
 
-    const result = db.readOne(id);
+    const result = {book: "not found"};
+
+    books.forEach(value => {
+        if(value == ISBN) {
+            result = {ISBN: ISBN};
+        }
+    const result = db.readOne(ISBN);
+    });
 });
 // PATCH (app.patch() ) -> Database.updateOne() -> collectionupdateOne()
 App.post("/books/search", (req, res) => {
@@ -41,9 +48,9 @@ App.post("/books/search", (req, res) => {
     const author = req.body.author;
     const description = req.body.description;
 
-    const result = await db.readMany(id,title);
+    const result = await db.readMany(title, author, description);
 
-    res.json(result);
+    res.json({books: result});
 });
 // PATCH (app.patch() ) -> Database.updateOne() -> collectionupdateOne()
 App.patch("/books/:ISBN", (req, res) => {
@@ -53,7 +60,7 @@ App.patch("/books/:ISBN", (req, res) => {
     const author = req.body.author;
     const description = req.body.description;
 
-    const result = await db.updateOne(id,title);
+    const result = await db.updateOne(title, author, description);
 
     res.json(result);
 });
@@ -63,7 +70,7 @@ App.delete("/books/:ISBN", (req, res) => {
 
     const result = db.deleteOne(id);
 
-        res.json({"deleted": 0});
+        res.json({"books": 0});
 });
 
 
