@@ -10,9 +10,9 @@ class Database {
         //Wait for the connect() method to finish.
         this.connection = await MongoClient.connect(url, {useUnifiedTopology: true});
         //Select a database.
-        this.database = this.connection.db("lab10");
+        this.database = this.connection.db("lab11");
         //Select a collection.
-        this.collection = this.database.collection("people");
+        this.collection = this.database.collection("books");
     }
     //Complete
     close(){
@@ -21,29 +21,30 @@ class Database {
         }
     }
 
-    createOne(person) {
+    createOne(id) {
         // Add
-        this.collection.push(person);
+        this.collection.push(id);
         
         //insert
         collection.insertOne({
-            "firstName": "Randall", 
-            "lastName": "Collins",
-            "favoriteColor": "Green"
+            "ISBN": "", 
+            "title": "",
+            "author": "",
+            "description": "description"
 
         });
 
         // Return
-        return {person: person};
+        return {id: id};
         
     }
 
-    readOne(person) {
+    readOne(id) {
         // Default response.
-        let result = {person: "not found"};
+        let result = {id: "not found"};
 
         //Find
-        collection.findOne({"firstName": {$eq:"Randall"}}, {"lastName": {$eq:"Collins"}}, {"favoriteColor": {$eq:"Green"}}
+        collection.findOne({"ISBN": {$eq:""}}, {"title": {$eq:""}}, {"author": {$eq:""}}, {"description": {$eq:""}}
         .then((results) => {
             console.log(result);
             connection.close();
@@ -53,21 +54,20 @@ class Database {
         // Return the default or searched-for result.
         return result;
     }
-    
-}
-});
 
-export default Database;
-
-
-
-
-
-//delete
-async.deleteOne
+    //delete
+deleteOne(id) {
 if(this.collection != null) {
     const result = await this.collection.deleteOne({"id": id});
     return{"delete": result.deltedCount};
 } else{
-    return {"deleted": 0};
+    return null;
+}   
 }
+
+});
+
+
+
+
+export default Database;
